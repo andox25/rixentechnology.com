@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RIXEN TECHNOLOGY — Document Automation for Insurance & Reinsurance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:      #0C1117;
+  --bg2:     #0F1520;
+  --card:    #131C26;
+  --card2:   #111829;
+  --petrol:  #1E3A4A;
+  --steel:   #2B5068;
+  --gold:    #C49A3C;
+  --gold2:   #D4AF5A;
+  --gold3:   rgba(196,154,60,0.15);
+  --cream:   #F2EDE5;
+  --muted:   rgba(242,237,229,0.42);
+  --dim:     rgba(242,237,229,0.16);
+  --border:  rgba(43,80,104,0.22);
+  --border2: rgba(196,154,60,0.14);
+  --t1:      .3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(196,154,60,.2);color:#fff}
+
+/* PROGRESS */
+#progress{position:fixed;top:0;left:0;height:1px;width:0%;background:linear-gradient(90deg,var(--steel),var(--gold));z-index:999;transition:width .1s linear}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:0 6vw;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all var(--t1)}
+nav.scrolled{background:rgba(12,17,23,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nlogo{display:flex;align-items:center;gap:12px;font-size:.73rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--cream)}
+.nlinks{display:flex;align-items:center;gap:30px}
+.nlinks a{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color var(--t1)}
+.nlinks a:hover{color:var(--cream)}
+.nlinks .ncta{padding:9px 22px;border:1px solid var(--border2);border-radius:2px;color:var(--gold2);letter-spacing:.1em;transition:all var(--t1)}
+.nlinks .ncta:hover{background:var(--gold3);border-color:rgba(196,154,60,.35);color:var(--gold2)}
+
+/* ══ HERO ══ */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:0 6vw;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 65% 50% at 60% 30%,rgba(30,58,74,.35) 0%,transparent 70%)}
+#hgrid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(43,80,104,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,80,104,.05) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 70% 60% at 60% 35%,black 10%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 60% 35%,black 10%,transparent 75%)}
+canvas#hcanvas{position:absolute;inset:0;pointer-events:none;opacity:.5}
+#hov{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg) 100%)}
+.hero-inner{position:relative;z-index:2;max-width:900px}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:40px;opacity:0;animation:up .8s .1s forwards}
+.hero-tag-line{width:28px;height:1px;background:var(--gold);opacity:.6}
+.hero-tag-text{font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:.8}
+h1.hero-h1{font-size:clamp(2.8rem,5.8vw,5.4rem);font-weight:800;line-height:1.03;letter-spacing:-.03em;color:#fff;margin-bottom:32px;opacity:0;animation:up .9s .25s forwards}
+h1.hero-h1 .thin{font-weight:300;color:rgba(255,255,255,.45)}
+.hero-divider{width:40px;height:1px;background:var(--gold);opacity:.5;margin-bottom:30px;opacity:0;animation:up .8s .4s forwards}
+p.hero-sub{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.85;max-width:540px;margin-bottom:50px;opacity:0;animation:up .8s .5s forwards}
+p.hero-sub strong{color:rgba(242,237,229,.7);font-weight:500}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .8s .65s forwards}
+.btn-p{display:inline-flex;align-items:center;gap:10px;padding:14px 30px;background:var(--petrol);border:1px solid rgba(43,80,104,.6);border-radius:2px;font-size:.8rem;font-weight:600;letter-spacing:.07em;color:var(--cream);transition:all var(--t1)}
+.btn-p:hover{background:var(--steel);border-color:var(--steel);transform:translateY(-2px)}
+.btn-p svg{transition:transform var(--t1)}
+.btn-p:hover svg{transform:translateX(3px)}
+.btn-g{display:inline-flex;align-items:center;padding:14px 26px;border:1px solid var(--border);border-radius:2px;font-size:.8rem;font-weight:400;color:var(--muted);transition:all var(--t1)}
+.btn-g:hover{border-color:rgba(43,80,104,.5);color:var(--cream)}
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* ══ TOOLS ══ */
+#tools{padding:20px 6vw;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative}
+#tools::before,#tools::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
+#tools::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+#tools::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.tools-track{display:flex;gap:44px;width:max-content;animation:slide 32s linear infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+.tool-item{display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:.7rem;font-weight:400;color:var(--dim);letter-spacing:.07em}
+.tool-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:.35}
+
+/* ══ SHARED ══ */
+section{padding:110px 6vw}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{font-size:.63rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:10px;opacity:.8}
+.eyebrow::before{content:'';width:18px;height:1px;background:var(--gold);opacity:.5}
+.h2{font-size:clamp(1.9rem,3.2vw,2.8rem);font-weight:700;color:#fff;line-height:1.14;letter-spacing:-.02em}
+.h2 .thin{font-weight:300;color:rgba(255,255,255,.42)}
+.body-text{font-size:.93rem;color:var(--muted);line-height:1.85;margin-top:18px}
+
+/* ══ WHAT ══ */
+#what{background:linear-gradient(180deg,var(--bg),var(--bg2) 50%,var(--bg))}
+.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;max-width:1180px;margin:0 auto}
+.what-rows{display:flex;flex-direction:column;gap:1px;margin-top:0;border-radius:6px;overflow:hidden;background:var(--border)}
+.wrow{background:var(--card);padding:26px 28px;transition:background var(--t1)}
+.wrow:hover{background:var(--card2)}
+.wrow h4{font-size:.88rem;font-weight:600;color:var(--cream);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.wrow h4 span{font-size:.56rem;font-weight:700;letter-spacing:.16em;color:var(--gold);opacity:.55}
+.wrow p{font-size:.8rem;color:var(--muted);line-height:1.65}
+
+/* ══ CAPABILITIES ══ */
+#capabilities{background:var(--bg2)}
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:52px}
+.cap-card{background:var(--card);padding:42px 34px;position:relative;transition:background var(--t1)}
+.cap-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.4,0,.2,1);opacity:.6}
+.cap-card:hover{background:rgba(19,28,38,.95)}
+.cap-card:hover::after{transform:scaleX(1)}
+.cap-n{font-size:.58rem;font-weight:700;letter-spacing:.2em;color:rgba(196,154,60,.3);margin-bottom:20px}
+.cap-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:11px;line-height:1.32}
+.cap-card p{font-size:.8rem;color:var(--muted);line-height:1.74;margin-bottom:22px}
+.cap-tags{display:flex;gap:6px;flex-wrap:wrap}
+.cap-tag{padding:3px 10px;border:1px solid rgba(196,154,60,.12);border-radius:2px;font-size:.57rem;letter-spacing:.09em;color:rgba(212,175,90,.5)}
+
+/* ══ METHODOLOGY ══ */
+#how{position:relative}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:52px}
+.phase{background:var(--card2);padding:46px 34px;position:relative;transition:background var(--t1)}
+.phase:hover{background:var(--card)}
+.phase-n{font-size:3.8rem;font-weight:800;line-height:1;color:rgba(43,80,104,.18);margin-bottom:22px;letter-spacing:-.04em}
+.phase h3{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:12px}
+.phase p{font-size:.8rem;color:var(--muted);line-height:1.72}
+.phase-dot{position:absolute;top:46px;right:34px;width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.35}
+
+/* ══ SECURITY ══ */
+#security{background:var(--bg2)}
+.sec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:52px}
+.sec-card{background:var(--card);padding:34px 38px;transition:background var(--t1)}
+.sec-card:hover{background:rgba(19,28,38,.95)}
+.sec-card h4{font-size:.9rem;font-weight:700;color:var(--cream);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.sec-card h4::before{content:'';width:16px;height:1px;background:var(--gold);opacity:.4;flex-shrink:0}
+.sec-card p{font-size:.8rem;color:var(--muted);line-height:1.68}
+
+/* ══ CTA ══ */
+#contact{text-align:center;position:relative;overflow:hidden;padding:140px 6vw}
+.cta-glow{position:absolute;bottom:-15%;left:50%;transform:translateX(-50%);width:55vw;height:55vh;background:radial-gradient(ellipse,rgba(30,58,74,.25) 0%,transparent 65%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:580px;margin:0 auto}
+.cta-inner .eyebrow{justify-content:center}
+.cta-inner .eyebrow::before{display:none}
+.cta-h{font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:700;letter-spacing:-.025em;color:#fff;line-height:1.06;margin-bottom:20px}
+.cta-h .gold{color:var(--gold2)}
+.cta-sub{font-size:.9rem;color:var(--muted);line-height:1.8;max-width:460px;margin:0 auto 48px;font-weight:300}
+.cta-email{margin-top:26px;font-size:.76rem;color:var(--dim)}
+.cta-email a{color:rgba(196,154,60,.45);transition:color .2s}
+.cta-email a:hover{color:var(--gold2)}
+
+/* ══ FOOTER ══ */
+footer{padding:26px 6vw;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-brand{display:flex;align-items:center;gap:10px;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:.66rem;color:var(--dim);letter-spacing:.09em;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:var(--muted)}
+.footer-copy{font-size:.63rem;color:rgba(242,237,229,.08)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .what-grid{grid-template-columns:1fr;gap:50px}
+  .cap-grid,.how-grid,.sec-grid{grid-template-columns:1fr}
+  .nlinks .nlink{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="nav">
+  <a href="#hero" class="nlogo">
+    <svg width="22" height="15" viewBox="0 0 28 18" fill="none">
+      <rect y="0" width="28" height="3" rx="1.5" fill="#C49A3C"/>
+      <rect y="7.5" width="20" height="3" rx="1.5" fill="#C49A3C" opacity=".55"/>
+      <rect y="15" width="13" height="3" rx="1.5" fill="#C49A3C" opacity=".28"/>
+    </svg>
+    RIXEN TECHNOLOGY
+  </a>
+  <div class="nlinks">
+    <a href="#capabilities" class="nlink">Capabilities</a>
+    <a href="#how" class="nlink">Methodology</a>
+    <a href="#security" class="nlink">Security</a>
+    <a href="#contact" class="ncta">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div id="hgrid"></div>
+  <canvas id="hcanvas"></canvas>
+  <div id="hov"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <div class="hero-tag-line"></div>
+      <div class="hero-tag-text">Insurance &amp; Reinsurance Operations</div>
+    </div>
+    <h1 class="hero-h1">
+      <span class="thin">Document automation</span><br>
+      for operations that<br>
+      cannot afford errors.
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">
+      Bordereaux. Claims files. Placement slips. Financial schedules.<br>
+      <strong>Structured, auditable, integrated</strong> — without replacing your existing systems.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-p">
+        Request a Private Assessment
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#capabilities" class="btn-g">View Capabilities</a>
+    </div>
+  </div>
+</section>
+
+<div id="tools"><div class="tools-track" id="toolsTrack"></div></div>
+
+<!-- WHAT WE DO -->
+<section id="what">
+  <div class="what-grid">
+    <div>
+      <p class="eyebrow reveal">The Firm</p>
+      <h2 class="h2 reveal d1">A boutique engineering firm.<br><span class="thin">Built for one sector.</span></h2>
+      <p class="body-text reveal d2">We design and deploy document automation pipelines for insurance and reinsurance operations. We connect directly to your existing infrastructure and deliver structured, traceable output — without replacing what already works.</p>
+    </div>
+    <div class="what-rows reveal d2">
+      <div class="wrow">
+        <h4><span>01</span> Architecture Assessment</h4>
+        <p>We map your document flows and integration gaps with precision. No assumptions — only your operational data.</p>
+      </div>
+      <div class="wrow">
+        <h4><span>02</span> Modular Deployment</h4>
+        <p>Controlled implementation cycles. Highest-impact workflow first. Scope defined and agreed before work begins.</p>
+      </div>
+      <div class="wrow">
+        <h4><span>03</span> Governance &amp; SLA</h4>
+        <p>Defined metrics and structured reporting cadences. Every pipeline monitored and refined over time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="wrap">
+    <p class="eyebrow reveal">Capabilities</p>
+    <h2 class="h2 reveal d1">Where we operate.</h2>
+    <div class="cap-grid">
+      <div class="cap-card reveal d1">
+        <div class="cap-n">01</div>
+        <h3>Bordereaux Reconciliation</h3>
+        <p>Multi-layout Excel and PDF bordereaux parsed, field-mapped and validated against the underlying treaty. Discrepancies identified before they become disputes.</p>
+        <div class="cap-tags">
+          <span class="cap-tag">Excel · PDF</span>
+          <span class="cap-tag">Treaty Validation</span>
+          <span class="cap-tag">Anomaly Detection</span>
+        </div>
+      </div>
+      <div class="cap-card reveal d2">
+        <div class="cap-n">02</div>
+        <h3>Slip &amp; Policy Parsing</h3>
+        <p>Placement slips, policy documents and endorsements converted into structured, searchable records — regardless of format or originating market.</p>
+        <div class="cap-tags">
+          <span class="cap-tag">ACORD XML</span>
+          <span class="cap-tag">Unstructured PDFs</span>
+          <span class="cap-tag">Endorsements</span>
+        </div>
+      </div>
+      <div class="cap-card reveal d3">
+        <div class="cap-n">03</div>
+        <h3>Claims File Ingestion</h3>
+        <p>Loss reports, adjuster notes and ACORD forms processed and delivered to your claims management system. Human review stage built into every pipeline.</p>
+        <div class="cap-tags">
+          <span class="cap-tag">Loss Reports</span>
+          <span class="cap-tag">ACORD Forms</span>
+          <span class="cap-tag">Human-in-the-Loop</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow reveal">Methodology</p>
+    <h2 class="h2 reveal d1">Three phases.<br><span class="thin">No surprises.</span></h2>
+    <div class="how-grid">
+      <div class="phase reveal d1">
+        <div class="phase-dot"></div>
+        <div class="phase-n">01</div>
+        <h3>Assess</h3>
+        <p>We map your document architecture, data flows and integration gaps. No assumptions — only verified operational data from your environment.</p>
+      </div>
+      <div class="phase reveal d2">
+        <div class="phase-dot"></div>
+        <div class="phase-n">02</div>
+        <h3>Deploy</h3>
+        <p>Controlled implementation cycles. Highest-impact workflow first. Deliverables are visible and measurable from the first delivery. Scope fixed before work begins.</p>
+      </div>
+      <div class="phase reveal d3">
+        <div class="phase-dot"></div>
+        <div class="phase-n">03</div>
+        <h3>Govern</h3>
+        <p>Defined performance metrics and structured reporting. Every pipeline monitored and refined over time. Full visibility retained by client at all times.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security">
+  <div class="wrap">
+    <p class="eyebrow reveal">Security &amp; Control</p>
+    <h2 class="h2 reveal d1">Designed for<br><span class="thin">regulated environments.</span></h2>
+    <div class="sec-grid">
+      <div class="sec-card reveal d1">
+        <h4>Confidential data handling</h4>
+        <p>Data retention parameters are defined contractually per engagement. Your documents are handled under strict confidentiality terms and not used for any purpose beyond the agreed scope.</p>
+      </div>
+      <div class="sec-card reveal d2">
+        <h4>Human-in-the-Loop review</h4>
+        <p>Every pipeline includes a structured review stage before data enters your systems. Automation accelerates the process — it does not remove human judgment from decisions that require it.</p>
+      </div>
+      <div class="sec-card reveal d3">
+        <h4>Process documentation</h4>
+        <p>Every transformation is logged and traceable. Process documentation is delivered with each engagement, structured to support your internal compliance and reporting requirements.</p>
+      </div>
+      <div class="sec-card reveal d4">
+        <h4>Controlled processing environment</h4>
+        <p>Sensitive financial data is handled within a controlled environment, with processing parameters agreed and documented before any pipeline goes live.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <p class="eyebrow reveal">Private Assessment</p>
+    <h2 class="cta-h reveal d1">Let's <span class="gold">talk.</span></h2>
+    <p class="cta-sub reveal d2">Let's assess where document automation can reduce operational friction, risk and manual workload in your organization.</p>
+    <a href="mailto:connect@rixentechnology.com" class="btn-p reveal d3" style="display:inline-flex">
+      Request a Private Assessment
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left:10px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="cta-email reveal d4">
+      <a href="mailto:connect@rixentechnology.com">connect@rixentechnology.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <svg width="20" height="13" viewBox="0 0 28 18" fill="none">
+      <rect y="0" width="28" height="3" rx="1.5" fill="#C49A3C" opacity=".3"/>
+      <rect y="7.5" width="20" height="3" rx="1.5" fill="#C49A3C" opacity=".18"/>
+      <rect y="15" width="13" height="3" rx="1.5" fill="#C49A3C" opacity=".1"/>
+    </svg>
+    RIXEN TECHNOLOGY
+  </div>
+  <div class="footer-links">
+    <a href="#capabilities">Capabilities</a>
+    <a href="#how">Methodology</a>
+    <a href="#security">Security</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Rixen Technology · rixentechnology.com</div>
+</footer>
+
+<script>
+// PROGRESS
+const prog=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=((h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+// NAV
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>40);},{passive:true});
+// PARTICLES (steel blue, subtle)
+(function(){
+  const c=document.getElementById('hcanvas'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<50;i++)pts.push({
+    x:Math.random()*1400,y:Math.random()*800,
+    vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,
+    r:Math.random()*1.2+.3,a:Math.random()*.4+.15
+  });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(43,80,104,${p.a*.5})`;ctx.fill();
+    });
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<150){
+        ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(43,80,104,${(1-d/150)*.06})`;ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+// TOOLS
+(function(){
+  const tools=['SAP for Insurance','Guidewire','Microsoft 365','Azure','n8n','Make','Sage','SharePoint','Power Automate','ACORD XML','Lloyd\'s Crystal','Google Workspace','DocuSign','Zapier','Teams','OpenAI','Anthropic'];
+  const t=document.getElementById('toolsTrack');
+  [...tools,...tools].forEach(n=>{
+    const d=document.createElement('div');d.className='tool-item';
+    d.innerHTML='<span class="tool-dot"></span>'+n;t.appendChild(d);
+  });
+})();
+// REVEAL
+(function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>
