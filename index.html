@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIXEN TECHNOLOGY — Automatización de Procesos e Integración de Sistemas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=nter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:      #0C1117;
@@ -163,6 +163,38 @@ footer{padding:26px 6vw;border-top:1px solid var(--border);display:flex;align-it
   .cap-grid,.how-grid,.sec-grid{grid-template-columns:1fr}
   .nlinks .nlink{display:none}
 }
+
+/* CONTACT FORM */
+#form-section{padding:100px 24px;background:var(--bg2);}
+.form-wrap{max-width:620px;margin:0 auto}
+.form-eyebrow{font-size:.72rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+.form-h{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:var(--cream);margin-bottom:12px;line-height:1.2}
+.form-sub{color:var(--muted);font-size:.95rem;margin-bottom:40px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:.78rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.form-field input,.form-field textarea{
+  background:var(--card);border:1px solid var(--border2);border-radius:8px;
+  padding:13px 16px;color:var(--cream);font-family:inherit;font-size:.95rem;
+  outline:none;transition:border-color var(--t1),box-shadow var(--t1);resize:none
+}
+.form-field input:focus,.form-field textarea:focus{
+  border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,154,60,.12)
+}
+.form-field textarea{min-height:130px}
+.form-submit{
+  margin-top:24px;display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold);color:#0C1117;font-weight:700;font-size:.9rem;
+  letter-spacing:.06em;padding:14px 32px;border-radius:9px;border:none;
+  cursor:pointer;transition:background var(--t1),transform var(--t1);font-family:inherit
+}
+.form-submit:hover{background:var(--gold2);transform:translateY(-1px)}
+.form-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.form-msg{margin-top:20px;font-size:.9rem;display:none}
+.form-msg.ok{color:#5ac57a;display:block}
+.form-msg.err{color:#e06060;display:block}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -338,6 +370,36 @@ footer{padding:26px 6vw;border-top:1px solid var(--border);display:flex;align-it
   </div>
 </section>
 
+<!-- FORM -->
+<section id="form-section">
+  <div class="form-wrap">
+    <p class="form-eyebrow reveal">Contacto</p>
+    <h2 class="form-h reveal d1">¿Listo para conversarlo?</h2>
+    <p class="form-sub reveal d2">Cuéntanos sobre tu empresa y el desafío que enfrentas. Te respondemos en menos de 24 horas.</p>
+    <form id="contactForm" class="reveal d3" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="f-nombre">Nombre</label>
+          <input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="name" required>
+        </div>
+        <div class="form-field">
+          <label for="f-empresa">Empresa</label>
+          <input id="f-empresa" name="empresa" type="text" placeholder="Tu empresa" autocomplete="organization">
+        </div>
+        <div class="form-field full">
+          <label for="f-mensaje">Mensaje</label>
+          <textarea id="f-mensaje" name="mensaje" placeholder="¿Cuál es el proceso o desafío que quieres automatizar?" required></textarea>
+        </div>
+      </div>
+      <button type="submit" class="form-submit">
+        Enviar mensaje
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <div class="form-msg" id="formMsg"></div>
+    </form>
+  </div>
+</section>
+
 <!-- CTA -->
 <section id="contact">
   <div class="cta-glow"></div>
@@ -345,7 +407,7 @@ footer{padding:26px 6vw;border-top:1px solid var(--border);display:flex;align-it
     <p class="eyebrow reveal">Siguiente paso</p>
     <h2 class="cta-h reveal d1"><span class="gold">Hablemos.</span></h2>
     <p class="cta-sub reveal d2">30 minutos para entender dónde puede estar perdiendo tiempo tu equipo. Sin compromiso. Solo una conversación honesta.</p>
-        <a href="https://outlook.office.com/bookwithme/user/a673b02c880e4a6ebcf19429b1fc7750@rixentechnology.com/meetingtype/25RPN336zkSVJOXmVCTH9Q2?anonymous&ismsaljsauthenabled&ep=mcard" target="_blank" class="btn-p reveal d3" style="display:inline-flex">
+    <a href="https://outlook.office.com/bookwithme/user/a673b02c880e4a6ebcf19429b1fc7750@rixentechnology.com/meetingtype/25RPN336zkSVJOXmVCTH9Q2?anonymous&ismsaljsauthenabled&ep=mcard" target="_blank" class="btn-p reveal d3" style="display:inline-flex">
       Agendar 30 minutos
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left:10px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
@@ -379,17 +441,32 @@ const prog=document.getElementById('progress');
 window.addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=((h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
 // NAV
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>40);},{passive:true});
-// PARTICLES
+// PARTICLES (steel blue, subtle)
 (function(){
   const c=document.getElementById('hcanvas'),ctx=c.getContext('2d');
   let W,H,pts=[];
   function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
   resize();window.addEventListener('resize',resize);
-  for(let i=0;i<50;i++)pts.push({x:Math.random()*1400,y:Math.random()*800,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.2+.3,a:Math.random()*.4+.15});
+  for(let i=0;i<50;i++)pts.push({
+    x:Math.random()*1400,y:Math.random()*800,
+    vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,
+    r:Math.random()*1.2+.3,a:Math.random()*.4+.15
+  });
   function draw(){
     ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(43,80,104,${p.a*.5})`;ctx.fill();});
-    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<150){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(43,80,104,${(1-d/150)*.06})`;ctx.lineWidth=.5;ctx.stroke();}}
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(43,80,104,${p.a*.5})`;ctx.fill();
+    });
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<150){
+        ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(43,80,104,${(1-d/150)*.06})`;ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
     requestAnimationFrame(draw);
   }
   draw();
@@ -398,13 +475,49 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 (function(){
   const tools=['Microsoft 365','Azure','n8n','Make','Google Workspace','SharePoint','Power Automate','Zapier','Teams','OpenAI','Anthropic','SAP','Salesforce','HubSpot','DocuSign','Slack','Notion','Sage'];
   const t=document.getElementById('toolsTrack');
-  [...tools,...tools].forEach(n=>{const d=document.createElement('div');d.className='tool-item';d.innerHTML='<span class="tool-dot"></span>'+n;t.appendChild(d);});
+  [...tools,...tools].forEach(n=>{
+    const d=document.createElement('div');d.className='tool-item';
+    d.innerHTML='<span class="tool-dot"></span>'+n;t.appendChild(d);
+  });
+})();
+// CONTACT FORM
+(function(){
+  const PA_URL='https://default3c900057bb0e4494b30a5a86043f88.ff.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d9c8f426b0a840cba6311147f6f9e560/triggers/manual/paths/invoke?api-version=1';
+  const form=document.getElementById('contactForm');
+  const btn=form.querySelector('.form-submit');
+  const msg=document.getElementById('formMsg');
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    const nombre=form.nombre.value.trim();
+    const empresa=form.empresa.value.trim();
+    const mensaje=form.mensaje.value.trim();
+    if(!nombre||!mensaje){msg.className='form-msg err';msg.textContent='Por favor completa nombre y mensaje.';return;}
+    btn.disabled=true;btn.textContent='Enviando…';
+    msg.className='form-msg';msg.textContent='';
+    try{
+      await fetch(PA_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({nombre,empresa,mensaje})
+      });
+      msg.className='form-msg ok';
+      msg.textContent='¡Mensaje enviado! Te respondemos en menos de 24 horas.';
+      form.reset();
+    }catch(err){
+      msg.className='form-msg err';
+      msg.textContent='Hubo un error. Escríbenos a connect@rixentechnology.com.';
+    }
+    btn.disabled=false;btn.innerHTML='Enviar mensaje <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  });
 })();
 // REVEAL
 (function(){
-  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:.08,rootMargin:'0px 0px -30px 0px'});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 })();
 </script>
+
 </body>
 </html>
