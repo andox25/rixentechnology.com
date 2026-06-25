@@ -386,8 +386,16 @@ footer{padding:26px 6vw;border-top:1px solid var(--border);display:flex;align-it
           <label for="f-empresa">Empresa</label>
           <input id="f-empresa" name="empresa" type="text" placeholder="Tu empresa" autocomplete="organization">
         </div>
+        <div class="form-field">
+          <label for="f-email">Email <span style="color:var(--gold)">*</span></label>
+          <input id="f-email" name="email" type="email" placeholder="tu@empresa.com" autocomplete="email" required>
+        </div>
+        <div class="form-field">
+          <label for="f-telefono">Teléfono</label>
+          <input id="f-telefono" name="telefono" type="tel" placeholder="+507 6000-0000" autocomplete="tel">
+        </div>
         <div class="form-field full">
-          <label for="f-mensaje">Mensaje</label>
+          <label for="f-mensaje">Mensaje <span style="color:var(--gold)">*</span></label>
           <textarea id="f-mensaje" name="mensaje" placeholder="¿Cuál es el proceso o desafío que quieres automatizar?" required></textarea>
         </div>
       </div>
@@ -490,15 +498,18 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
     e.preventDefault();
     const nombre=form.nombre.value.trim();
     const empresa=form.empresa.value.trim();
+    const email=form.email.value.trim();
+    const telefono=form.telefono.value.trim();
     const mensaje=form.mensaje.value.trim();
-    if(!nombre||!mensaje){msg.className='form-msg err';msg.textContent='Por favor completa nombre y mensaje.';return;}
+    if(!nombre||!email||!mensaje){msg.className='form-msg err';msg.textContent='Por favor completa nombre, email y mensaje.';return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.className='form-msg err';msg.textContent='Por favor ingresa un email válido.';return;}
     btn.disabled=true;btn.textContent='Enviando…';
     msg.className='form-msg';msg.textContent='';
     try{
       await fetch(PA_URL,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({nombre,empresa,mensaje})
+        body:JSON.stringify({nombre,empresa,email,telefono,mensaje})
       });
       msg.className='form-msg ok';
       msg.textContent='¡Mensaje enviado! Te respondemos en menos de 24 horas.';
