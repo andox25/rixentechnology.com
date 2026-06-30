@@ -1,534 +1,1701 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RIXEN TECHNOLOGY — Automatización de Procesos e Integración de Sistemas</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:      #0C1117;
-  --bg2:     #0F1520;
-  --card:    #131C26;
-  --card2:   #111829;
-  --petrol:  #1E3A4A;
-  --steel:   #2B5068;
-  --gold:    #C49A3C;
-  --gold2:   #D4AF5A;
-  --gold3:   rgba(196,154,60,0.15);
-  --cream:   #F2EDE5;
-  --muted:   rgba(242,237,229,0.42);
-  --dim:     rgba(242,237,229,0.16);
-  --border:  rgba(43,80,104,0.22);
-  --border2: rgba(196,154,60,0.14);
-  --t1:      .3s cubic-bezier(.4,0,.2,1);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-::selection{background:rgba(196,154,60,.2);color:#fff}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIXEN TECHNOLOGY — Operaciones Autónomas para Empresas</title>
+  <meta name="description" content="Rixen ayuda a las empresas a evolucionar hacia Operaciones Autónomas: seguras, auditables y bajo control total. Descubre en qué nivel está tu empresa." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* PROGRESS */
-#progress{position:fixed;top:0;left:0;height:1px;width:0%;background:linear-gradient(90deg,var(--steel),var(--gold));z-index:999;transition:width .1s linear}
+    :root {
+      --bg: #0C1117;
+      --bg-card: #111820;
+      --bg-card-2: #141C25;
+      --gold: #C49A3C;
+      --gold-light: #D4AA52;
+      --gold-dim: rgba(196,154,60,0.15);
+      --text: #E8EDF2;
+      --text-muted: #8A96A3;
+      --text-dim: #4A5568;
+      --border: rgba(196,154,60,0.18);
+      --border-subtle: rgba(255,255,255,0.06);
+    }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:0 6vw;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all var(--t1)}
-nav.scrolled{background:rgba(12,17,23,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nlogo{display:flex;align-items:center;gap:12px;font-size:.73rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--cream)}
-.nlinks{display:flex;align-items:center;gap:30px}
-.nlinks a{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color var(--t1)}
-.nlinks a:hover{color:var(--cream)}
-.nlinks .ncta{padding:9px 22px;border:1px solid var(--border2);border-radius:2px;color:var(--gold2);letter-spacing:.1em;transition:all var(--t1)}
-.nlinks .ncta:hover{background:var(--gold3);border-color:rgba(196,154,60,.35);color:var(--gold2)}
+    html { scroll-behavior: smooth; }
 
-/* ══ HERO ══ */
-#hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:0 6vw;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 65% 50% at 60% 30%,rgba(30,58,74,.35) 0%,transparent 70%)}
-#hgrid{position:absolute;inset:0;
-  background-image:linear-gradient(rgba(43,80,104,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,80,104,.05) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(ellipse 70% 60% at 60% 35%,black 10%,transparent 75%);
-  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 60% 35%,black 10%,transparent 75%)}
-canvas#hcanvas{position:absolute;inset:0;pointer-events:none;opacity:.5}
-#hov{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg) 100%)}
-.hero-inner{position:relative;z-index:2;max-width:900px}
-.hero-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:40px;opacity:0;animation:up .8s .1s forwards}
-.hero-tag-line{width:28px;height:1px;background:var(--gold);opacity:.6}
-.hero-tag-text{font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:.8}
-h1.hero-h1{font-size:clamp(2.8rem,5.8vw,5.4rem);font-weight:800;line-height:1.03;letter-spacing:-.03em;color:#fff;margin-bottom:32px;opacity:0;animation:up .9s .25s forwards}
-h1.hero-h1 .thin{font-weight:300;color:rgba(255,255,255,.45)}
-.hero-divider{width:40px;height:1px;background:var(--gold);opacity:.5;margin-bottom:30px;opacity:0;animation:up .8s .4s forwards}
-p.hero-sub{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.85;max-width:540px;margin-bottom:50px;opacity:0;animation:up .8s .5s forwards}
-p.hero-sub strong{color:rgba(242,237,229,.7);font-weight:500}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .8s .65s forwards}
-.btn-p{display:inline-flex;align-items:center;gap:10px;padding:14px 30px;background:var(--petrol);border:1px solid rgba(43,80,104,.6);border-radius:2px;font-size:.8rem;font-weight:600;letter-spacing:.07em;color:var(--cream);transition:all var(--t1)}
-.btn-p:hover{background:var(--steel);border-color:var(--steel);transform:translateY(-2px)}
-.btn-p svg{transition:transform var(--t1)}
-.btn-p:hover svg{transform:translateX(3px)}
-.btn-g{display:inline-flex;align-items:center;padding:14px 26px;border:1px solid var(--border);border-radius:2px;font-size:.8rem;font-weight:400;color:var(--muted);transition:all var(--t1)}
-.btn-g:hover{border-color:rgba(43,80,104,.5);color:var(--cream)}
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-/* ══ TOOLS ══ */
-#tools{padding:20px 6vw;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative}
-#tools::before,#tools::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
-#tools::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
-#tools::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
-.tools-track{display:flex;gap:44px;width:max-content;animation:slide 32s linear infinite}
-@keyframes slide{to{transform:translateX(-50%)}}
-.tool-item{display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:.7rem;font-weight:400;color:var(--dim);letter-spacing:.07em}
-.tool-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:.35}
+    /* ── SCROLL PROGRESS ── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      width: 0%;
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
 
-/* ══ SHARED ══ */
-section{padding:110px 6vw}
-.wrap{max-width:1180px;margin:0 auto}
-.eyebrow{font-size:.63rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:10px;opacity:.8}
-.eyebrow::before{content:'';width:18px;height:1px;background:var(--gold);opacity:.5}
-.h2{font-size:clamp(1.9rem,3.2vw,2.8rem);font-weight:700;color:#fff;line-height:1.14;letter-spacing:-.02em}
-.h2 .thin{font-weight:300;color:rgba(255,255,255,.42)}
-.body-text{font-size:.93rem;color:var(--muted);line-height:1.85;margin-top:18px}
+    /* ── NAV ── */
+    #main-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      padding: 0 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(12,17,23,0.88);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    #main-nav.scrolled {
+      background: rgba(12,17,23,0.97);
+      border-color: var(--border-subtle);
+    }
 
-/* ══ WHAT ══ */
-#what{background:linear-gradient(180deg,var(--bg),var(--bg2) 50%,var(--bg))}
-.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;max-width:1180px;margin:0 auto}
-.what-rows{display:flex;flex-direction:column;gap:1px;margin-top:0;border-radius:6px;overflow:hidden;background:var(--border)}
-.wrow{background:var(--card);padding:26px 28px;transition:background var(--t1)}
-.wrow:hover{background:var(--card2)}
-.wrow h4{font-size:.88rem;font-weight:600;color:var(--cream);margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.wrow h4 span{font-size:.56rem;font-weight:700;letter-spacing:.16em;color:var(--gold);opacity:.55}
-.wrow p{font-size:.8rem;color:var(--muted);line-height:1.65}
+    .nav-logo {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon {
+      width: 28px; height: 28px;
+    }
+    .nav-logo-icon svg { width: 28px; height: 28px; display: block; }
+    .nav-logo-text {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #E8EDF2;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
-/* ══ CAPABILITIES ══ */
-#capabilities{background:var(--bg2)}
-.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:52px}
-.cap-card{background:var(--card);padding:42px 34px;position:relative;transition:background var(--t1)}
-.cap-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.4,0,.2,1);opacity:.6}
-.cap-card:hover{background:rgba(19,28,38,.95)}
-.cap-card:hover::after{transform:scaleX(1)}
-.cap-n{font-size:.58rem;font-weight:700;letter-spacing:.2em;color:rgba(196,154,60,.3);margin-bottom:20px}
-.cap-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:11px;line-height:1.32}
-.cap-card p{font-size:.8rem;color:var(--muted);line-height:1.74;margin-bottom:22px}
-.cap-tags{display:flex;gap:6px;flex-wrap:wrap}
-.cap-tag{padding:3px 10px;border:1px solid rgba(196,154,60,.12);border-radius:2px;font-size:.57rem;letter-spacing:.09em;color:rgba(212,175,90,.5)}
+    .nav-links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .nav-links a {
+      font-size: 0.79rem;
+      font-weight: 500;
+      color: #8A96A3;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: #E8EDF2; }
 
-/* ══ METHODOLOGY ══ */
-#how{position:relative}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:52px}
-.phase{background:var(--card2);padding:46px 34px;position:relative;transition:background var(--t1)}
-.phase:hover{background:var(--card)}
-.phase-n{font-size:3.8rem;font-weight:800;line-height:1;color:rgba(43,80,104,.18);margin-bottom:22px;letter-spacing:-.04em}
-.phase h3{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:12px}
-.phase p{font-size:.8rem;color:var(--muted);line-height:1.72}
-.phase-dot{position:absolute;top:46px;right:34px;width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.35}
+    .nav-cta {
+      background: #C49A3C;
+      color: #0C1117 !important;
+      padding: 0.44rem 1.1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.77rem;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: #D4AA52; color: #0C1117; }
 
-/* ══ SECURITY ══ */
-#security{background:var(--bg2)}
-.sec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:52px}
-.sec-card{background:var(--card);padding:34px 38px;transition:background var(--t1)}
-.sec-card:hover{background:rgba(19,28,38,.95)}
-.sec-card h4{font-size:.9rem;font-weight:700;color:var(--cream);margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.sec-card h4::before{content:'';width:16px;height:1px;background:var(--gold);opacity:.4;flex-shrink:0}
-.sec-card p{font-size:.8rem;color:var(--muted);line-height:1.68}
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: #8A96A3;
+      border-radius: 2px;
+    }
 
-/* ══ CTA ══ */
-#contact{text-align:center;position:relative;overflow:hidden;padding:140px 6vw}
-.cta-glow{position:absolute;bottom:-15%;left:50%;transform:translateX(-50%);width:55vw;height:55vh;background:radial-gradient(ellipse,rgba(30,58,74,.25) 0%,transparent 65%);pointer-events:none}
-.cta-inner{position:relative;z-index:1;max-width:580px;margin:0 auto}
-.cta-inner .eyebrow{justify-content:center}
-.cta-inner .eyebrow::before{display:none}
-.cta-h{font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:700;letter-spacing:-.025em;color:#fff;line-height:1.06;margin-bottom:20px}
-.cta-h .gold{color:var(--gold2)}
-.cta-sub{font-size:.9rem;color:var(--muted);line-height:1.8;max-width:460px;margin:0 auto 48px;font-weight:300}
-.cta-email{margin-top:26px;font-size:.76rem;color:var(--dim)}
-.cta-email a{color:rgba(196,154,60,.45);transition:color .2s}
-.cta-email a:hover{color:var(--gold2)}
+    /* Mobile dropdown */
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      z-index: 9000;
+      background: rgba(12,17,23,0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 1.25rem 2rem 1.75rem;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #8A96A3;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      padding: 0.25rem 0;
+    }
+    #mobile-menu a:hover { color: #E8EDF2; }
+    #mobile-menu .mob-cta { color: #C49A3C !important; font-weight: 700 !important; }
 
-/* ══ FOOTER ══ */
-footer{padding:26px 6vw;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.footer-brand{display:flex;align-items:center;gap:10px;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
-.footer-links{display:flex;gap:24px}
-.footer-links a{font-size:.66rem;color:var(--dim);letter-spacing:.09em;text-transform:uppercase;transition:color .2s}
-.footer-links a:hover{color:var(--muted)}
-.footer-copy{font-size:.63rem;color:rgba(242,237,229,.08)}
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 4rem;
+      overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .hero-h1 {
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+    .hero-h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: #0C1117;
+      padding: 0.85rem 1.75rem;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
-.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
-.reveal.visible{opacity:1;transform:none}
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 1.75rem;
+      border-radius: 5px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: 1px solid var(--border-subtle);
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--gold); background: var(--gold-dim); }
 
-@media(max-width:900px){
-  .what-grid{grid-template-columns:1fr;gap:50px}
-  .cap-grid,.how-grid,.sec-grid{grid-template-columns:1fr}
-  .nlinks .nlink{display:none}
-}
+    .trust-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+    .trust-chip {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .trust-chip::before { content: "✔"; color: var(--gold); font-size: 0.65rem; }
+    .trust-divider { color: var(--text-dim); }
 
-/* CONTACT FORM */
-#form-section{padding:100px 24px;background:var(--bg2);}
-.form-wrap{max-width:620px;margin:0 auto}
-.form-eyebrow{font-size:.72rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
-.form-h{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:var(--cream);margin-bottom:12px;line-height:1.2}
-.form-sub{color:var(--muted);font-size:.95rem;margin-bottom:40px;line-height:1.6}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-field{display:flex;flex-direction:column;gap:6px}
-.form-field.full{grid-column:1/-1}
-.form-field label{font-size:.78rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
-.form-field input,.form-field textarea{
-  background:var(--card);border:1px solid var(--border2);border-radius:8px;
-  padding:13px 16px;color:var(--cream);font-family:inherit;font-size:.95rem;
-  outline:none;transition:border-color var(--t1),box-shadow var(--t1);resize:none
-}
-.form-field input:focus,.form-field textarea:focus{
-  border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,154,60,.12)
-}
-.form-field textarea{min-height:130px}
-.form-submit{
-  margin-top:24px;display:inline-flex;align-items:center;gap:10px;
-  background:var(--gold);color:#0C1117;font-weight:700;font-size:.9rem;
-  letter-spacing:.06em;padding:14px 32px;border-radius:9px;border:none;
-  cursor:pointer;transition:background var(--t1),transform var(--t1);font-family:inherit
-}
-.form-submit:hover{background:var(--gold2);transform:translateY(-1px)}
-.form-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.form-msg{margin-top:20px;font-size:.9rem;display:none}
-.form-msg.ok{color:#5ac57a;display:block}
-.form-msg.err{color:#e06060;display:block}
-@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
-</style>
+    /* ── TOOLS BAR ── */
+    #tools-bar {
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      overflow: hidden;
+      position: relative;
+    }
+    #tools-bar::before, #tools-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    #tools-bar::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    #tools-bar::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+
+    .tools-track {
+      display: flex;
+      gap: 3rem;
+      animation: scrollTrack 32s linear infinite;
+      width: max-content;
+    }
+    .tools-track:hover { animation-play-state: paused; }
+    @keyframes scrollTrack {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .tool-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      padding: 0.2rem 0;
+    }
+    .tool-item:hover { color: var(--text-muted); }
+    .tool-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.5; }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.75;
+      margin-bottom: 3rem;
+    }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── FRAMEWORK ── */
+    #framework { background: var(--bg); }
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 3rem;
+      position: relative;
+    }
+    .levels-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--border-subtle), var(--gold), var(--border-subtle));
+      z-index: 0;
+    }
+    .level-card {
+      position: relative;
+      z-index: 1;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.75rem;
+    }
+    .level-num-wrap {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 2px solid var(--border-subtle);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      transition: border-color 0.3s;
+    }
+    .level-card:hover .level-num-wrap { border-color: var(--gold); color: var(--gold); }
+    .level-card.active .level-num-wrap {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+      color: var(--gold);
+    }
+    .level-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    .level-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .level-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      border: 1px solid;
+    }
+    .badge-entry {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+    .badge-dest {
+      color: #0C1117;
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+    .level-card.destination .level-num-wrap {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(196,154,60,0.12);
+    }
+    .level-card.destination .level-name { color: var(--gold); }
+    .framework-cta {
+      text-align: center;
+      margin-top: 3.5rem;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--bg-card); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      margin-top: 3rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .service-card {
+      background: var(--bg-card-2);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.2s;
+    }
+    .service-card:hover { background: #18232F; }
+    .service-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .service-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      flex: 1;
+    }
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      border: 1px solid var(--border-subtle);
+      padding: 0.25rem 0.55rem;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── ASSESSMENT ── */
+    #assessment { background: var(--bg); }
+    .quiz-wrap {
+      max-width: 680px;
+      margin: 3rem auto 0;
+    }
+    .quiz-progress-bar {
+      height: 3px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    .quiz-progress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    .quiz-step-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+    .quiz-question {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 1.75rem;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .quiz-option {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      text-align: left;
+    }
+    .quiz-option:hover {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+      transform: translateX(3px);
+    }
+    .quiz-option.selected {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+    .quiz-option-letter {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .quiz-option.selected .quiz-option-letter {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #0C1117;
+    }
+    .quiz-option-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .quiz-option.selected .quiz-option-text { color: var(--text); }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.75rem;
+    }
+    .btn-quiz-next {
+      background: var(--gold);
+      color: #0C1117;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-quiz-next:hover { background: var(--gold-light); }
+    .btn-quiz-next:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* Result */
+    .quiz-result {
+      display: none;
+      text-align: center;
+    }
+    .result-level-num {
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .result-level-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .result-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+    }
+    .result-next {
+      font-size: 0.85rem;
+      color: var(--text);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+      line-height: 1.65;
+    }
+    .result-next strong { color: var(--gold); }
+
+    /* ── CONFIANZA ── */
+    #confianza { background: var(--bg-card); }
+    .trust-block-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 3.5rem;
+    }
+    .trust-item {
+      background: var(--bg-card-2);
+      padding: 1.5rem 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .trust-item::before {
+      content: "→";
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 0.8rem;
+    }
+    .trust-nolist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 3.5rem;
+    }
+    .trust-nolist li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      line-height: 1.6;
+    }
+    .trust-nolist li::before {
+      content: "✗";
+      color: #E55;
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 0.78rem;
+      margin-top: 3px;
+    }
+    .no-sub {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .doc-card {
+      background: var(--bg-card-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-card:hover { border-color: var(--gold); background: #18232F; }
+    .doc-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+    .doc-icon svg { width: 32px; height: 32px; }
+    .doc-role {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .doc-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .doc-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .btn-doc {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s, border-color 0.2s;
+      letter-spacing: 0.04em;
+      align-self: flex-start;
+    }
+    .btn-doc:hover { background: var(--gold-dim); border-color: var(--gold); }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--bg); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-meta h2 { margin-bottom: 1rem; }
+    .contact-meta p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+    .contact-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); }
+
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    input, textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 5px;
+      padding: 0.75rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    input:focus, textarea:focus { border-color: var(--gold); }
+    input::placeholder, textarea::placeholder { color: var(--text-dim); }
+    textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      background: var(--gold);
+      color: #0C1117;
+      border: none;
+      padding: 0.9rem 1.75rem;
+      border-radius: 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .btn-submit:hover { background: var(--gold-light); }
+    #form-success {
+      display: none;
+      background: rgba(196,154,60,0.1);
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--gold);
+      line-height: 1.65;
+    }
+    #form-error {
+      display: none;
+      background: rgba(229,85,85,0.08);
+      border: 1px solid rgba(229,85,85,0.3);
+      border-radius: 6px;
+      padding: 1.25rem;
+      font-size: 0.88rem;
+      color: #E55;
+      line-height: 1.65;
+    }
+
+    /* ── CTA FINAL ── */
+    #cta-final {
+      position: relative;
+      background: var(--bg);
+      text-align: center;
+      padding: 9rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+      overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(196,154,60,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    #cta-final .cta-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    #cta-final h2 {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--gold);
+      margin-bottom: 1.75rem;
+    }
+    #cta-final p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+    }
+    #cta-final .email-link {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    #cta-final .email-link:hover { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-logo { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; }
+    .footer-tagline { font-size: 0.75rem; color: var(--text-dim); text-align: center; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.75rem; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.7rem; color: var(--text-dim); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .levels-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .levels-grid::before { display: none; }
+      .level-card {
+        flex-direction: row;
+        text-align: left;
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 1.25rem 0.5rem;
+      }
+      .services-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .trust-grid { grid-template-columns: 1fr; }
+      .docs-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    @media (min-width: 961px) {
+      .nav-hamburger { display: none !important; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; width: 100%; }
+      .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+      section { padding: 4rem 1.25rem; }
+    }
+  </style>
 </head>
 <body>
 
-<div id="progress"></div>
+<!-- Scroll progress bar -->
+<div id="scroll-progress"></div>
 
-<nav id="nav">
-  <a href="#hero" class="nlogo">
-    <svg width="22" height="15" viewBox="0 0 28 18" fill="none">
-      <rect y="0" width="28" height="3" rx="1.5" fill="#C49A3C"/>
-      <rect y="7.5" width="20" height="3" rx="1.5" fill="#C49A3C" opacity=".55"/>
-      <rect y="15" width="13" height="3" rx="1.5" fill="#C49A3C" opacity=".28"/>
-    </svg>
-    <span>RI<span style="color:var(--gold2)">X</span>EN TECHNOLOGY</span>
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" fill="none" stroke="#C49A3C" stroke-width="1.5"/>
+        <polygon points="14,7 21,11 21,17 14,21 7,17 7,11" fill="rgba(196,154,60,0.15)" stroke="#C49A3C" stroke-width="1"/>
+        <circle cx="14" cy="14" r="2.5" fill="#C49A3C"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">Rixen Technology</span>
   </a>
-  <div class="nlinks">
-    <a href="#capabilities" class="nlink">Capacidades</a>
-    <a href="#how" class="nlink">Metodología</a>
-    <a href="#security" class="nlink">Confianza</a>
-    <a href="#contact" class="ncta">Contáctanos</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#framework">Framework</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#confianza">Confianza</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#assessment" class="nav-cta">Evalúa tu empresa</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" aria-label="Menú" role="button" tabindex="0">
+    <span></span><span></span><span></span>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- Mobile dropdown — fuera del nav para evitar conflictos de stacking context -->
+<div id="mobile-menu">
+  <a href="#framework">Framework</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#confianza">Confianza</a>
+  <a href="#contacto">Contacto</a>
+  <a href="#assessment" class="mob-cta">Evalúa tu empresa →</a>
+</div>
+
+<!-- ── HERO ── -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div id="hgrid"></div>
-  <canvas id="hcanvas"></canvas>
-  <div id="hov"></div>
-  <div class="hero-inner">
-    <div class="hero-tag">
-      <div class="hero-tag-line"></div>
-      <div class="hero-tag-text">Automatización · IA Documental · Integración</div>
-    </div>
-    <h1 class="hero-h1">
-      <span class="thin">Hacemos que</span><br>
-      las operaciones<br>
-      se ejecuten solas.
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <h1 class="hero-h1 reveal reveal-delay-1">
+      Tu empresa no debería necesitar<br />
+      <em>más personas</em> para operar mejor.
     </h1>
-    <div class="hero-divider"></div>
-    <p class="hero-sub">
-      Workflows. Documentos. Sistemas.<br>
-      <strong>Automatizados, trazables y bajo tu control</strong> — sin reemplazar lo que ya tienes.
+    <p class="hero-sub reveal reveal-delay-2">
+      Eliminamos el trabajo repetitivo, integramos tus sistemas y desplegamos agentes de IA
+      que operan 24/7 — siempre bajo el control de tu organización.
     </p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-p">
-        Solicitar una evaluación
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#assessment" class="btn-primary">
+        Descubre el nivel de autonomía de tu operación →
       </a>
-      <a href="#capabilities" class="btn-g">Ver capacidades</a>
+      <a href="https://outlook.office.com/bookwithme/user/a673b02c880e4a6ebcf19429b1fc7750@rixentechnology.com/meetingtype/25RPN336zkSVJOXmVCTH9Q2?anonymous&ismsaljsauthenabled&ep=mcard"
+         target="_blank" rel="noopener" class="btn-secondary">
+        Agendar 30 minutos
+      </a>
+    </div>
+    <div class="trust-chips reveal reveal-delay-4">
+      <span class="trust-chip">Seguridad empresarial</span>
+      <span class="trust-divider">·</span>
+      <span class="trust-chip">Microsoft 365 · Azure · SAP · ERPs</span>
+      <span class="trust-divider">·</span>
+      <span class="trust-chip">Auditoría y trazabilidad</span>
+      <span class="trust-divider">·</span>
+      <span class="trust-chip">Control total del cliente</span>
     </div>
   </div>
 </section>
 
-<div id="tools"><div class="tools-track" id="toolsTrack"></div></div>
+<!-- ── TOOLS BAR ── -->
+<div id="tools-bar">
+  <div class="tools-track" id="tools-track">
+    <!-- Items duplicated for infinite loop -->
+  </div>
+</div>
 
-<!-- QUÉ HACEMOS -->
-<section id="what">
-  <div class="what-grid">
-    <div>
-      <p class="eyebrow reveal">La Firma</p>
-      <h2 class="h2 reveal d1">Ingeniería de automatización.<br><span class="thin">Para cualquier operación.</span></h2>
-      <p class="body-text reveal d2">Diseñamos e implementamos soluciones de automatización, inteligencia documental e integración de sistemas. Nos conectamos a tu infraestructura existente y entregamos resultados medibles — sin reemplazar lo que ya funciona.</p>
+<!-- ── FRAMEWORK ── -->
+<section id="framework">
+  <div class="section-inner">
+    <span class="eyebrow reveal">El Framework</span>
+    <h2 class="reveal reveal-delay-1">¿En qué nivel está tu empresa?</h2>
+    <p class="section-intro reveal reveal-delay-2">
+      Las empresas no pasan de manuales a autónomas de un día para otro.
+      Existe un camino claro. Rixen lo diseñó, lo documenta y lo ejecuta.
+    </p>
+
+    <div class="levels-grid">
+      <div class="level-card reveal reveal-delay-1">
+        <div class="level-num-wrap">N1</div>
+        <div>
+          <div class="level-name">Manual</div>
+          <div class="level-desc">Procesos ejecutados por personas. Datos en Excel. Aprobaciones por correo. Alto riesgo de error humano.</div>
+        </div>
+      </div>
+      <div class="level-card reveal reveal-delay-2">
+        <div class="level-num-wrap">N2</div>
+        <div>
+          <div class="level-name">Digitalizado</div>
+          <div class="level-desc">Los datos ya están en sistemas digitales, pero los procesos aún requieren intervención manual en cada paso.</div>
+        </div>
+      </div>
+      <div class="level-card active reveal reveal-delay-3">
+        <div class="level-num-wrap">N3</div>
+        <div>
+          <div class="level-badge badge-entry" style="margin-bottom:0.5rem;">Rixen entra aquí</div>
+          <div class="level-name">Automatizado</div>
+          <div class="level-desc">Flujos de trabajo automatizados. Tareas repetitivas eliminadas. El equipo se libera de trabajo mecánico.</div>
+        </div>
+      </div>
+      <div class="level-card reveal reveal-delay-4">
+        <div class="level-num-wrap">N4</div>
+        <div>
+          <div class="level-name">Asistido por IA</div>
+          <div class="level-desc">Agentes de inteligencia artificial que analizan, clasifican, proponen y actúan. El humano supervisa, no ejecuta.</div>
+        </div>
+      </div>
+      <div class="level-card destination reveal reveal-delay-5">
+        <div class="level-num-wrap">N5</div>
+        <div>
+          <div class="level-badge badge-dest" style="margin-bottom:0.5rem;">Destino</div>
+          <div class="level-name">Operaciones Autónomas™</div>
+          <div class="level-desc">Operaciones que se ejecutan, monitorean y optimizan solas. Seguras, auditables y bajo control total de la organización.</div>
+        </div>
+      </div>
     </div>
-    <div class="what-rows reveal d2">
-      <div class="wrow">
-        <h4><span>01</span> Diagnóstico de Procesos</h4>
-        <p>Mapeamos tus flujos operativos e identificamos dónde la tecnología genera mayor retorno. Sin suposiciones — solo datos reales de tu entorno.</p>
+
+    <div class="framework-cta reveal">
+      <a href="#assessment" class="btn-primary">Evalúa tu empresa — 5 minutos →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICIOS ── -->
+<section id="servicios">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Cómo trabajamos</span>
+    <h2 class="reveal reveal-delay-1">De donde estás.<br />A donde necesitas llegar.</h2>
+
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">01</div>
+        <div class="service-title">Automatización de Operaciones</div>
+        <div class="service-desc">
+          Eliminamos los procesos manuales que consumen tiempo de tu equipo.
+          Flujos de aprobación, reportes, conciliaciones, notificaciones —
+          automatizados y trazables desde el día uno.
+        </div>
+        <div class="service-tags">
+          <span class="tag">Power Automate</span>
+          <span class="tag">n8n</span>
+          <span class="tag">Make</span>
+          <span class="tag">Microsoft 365</span>
+        </div>
       </div>
-      <div class="wrow">
-        <h4><span>02</span> Implementación Modular</h4>
-        <p>Ciclos controlados. El proceso de mayor impacto primero. Alcance definido y acordado antes de que empiece cualquier trabajo.</p>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">02</div>
+        <div class="service-title">Integración de Sistemas con IA</div>
+        <div class="service-desc">
+          Conectamos los sistemas que ya tienes — sin reemplazarlos.
+          Añadimos inteligencia documental: extracción, clasificación y
+          procesamiento de datos de cualquier formato, en segundos.
+        </div>
+        <div class="service-tags">
+          <span class="tag">APIs REST</span>
+          <span class="tag">OCR + IA</span>
+          <span class="tag">SAP</span>
+          <span class="tag">Azure</span>
+          <span class="tag">ERPs</span>
+        </div>
       </div>
-      <div class="wrow">
-        <h4><span>03</span> Gobernanza &amp; SLA</h4>
-        <p>Métricas claras y reportes estructurados. Cada pipeline monitoreado y refinado en el tiempo. Visibilidad total para el cliente.</p>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">03</div>
+        <div class="service-title">Agentes de IA Operacionales</div>
+        <div class="service-desc">
+          Desplegamos agentes que trabajan 24/7: investigan, clasifican,
+          generan propuestas y ejecutan flujos — siempre con auditoría
+          completa y control humano donde la organización lo requiera.
+        </div>
+        <div class="service-tags">
+          <span class="tag">Claude API</span>
+          <span class="tag">Gemini</span>
+          <span class="tag">Azure OpenAI</span>
+          <span class="tag">Webhooks</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CAPACIDADES -->
-<section id="capabilities">
-  <div class="wrap">
-    <p class="eyebrow reveal">Capacidades</p>
-    <h2 class="h2 reveal d1">Dónde operamos.</h2>
-    <div class="cap-grid">
-      <div class="cap-card reveal d1">
-        <div class="cap-n">01</div>
-        <h3>Automatización de Flujos</h3>
-        <p>Diseñamos workflows que eliminan el trabajo manual repetitivo — conciliaciones, reportes, notificaciones y aprobaciones. Tu equipo se enfoca en lo que importa.</p>
-        <div class="cap-tags">
-          <span class="cap-tag">n8n · Make</span>
-          <span class="cap-tag">Power Automate</span>
-          <span class="cap-tag">Microsoft 365</span>
+<!-- ── ASSESSMENT ── -->
+<section id="assessment">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Diagnóstico Gratuito</span>
+    <h2 class="reveal reveal-delay-1">Descubre tu nivel de<br />Operaciones Autónomas</h2>
+    <p class="section-intro reveal reveal-delay-2">5 preguntas. 5 minutos. Un resultado accionable.</p>
+
+    <div class="quiz-wrap reveal reveal-delay-3" id="quiz-wrap">
+      <div id="quiz-main">
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:20%"></div>
+        </div>
+        <div class="quiz-step-label" id="quiz-step-label">Pregunta 1 de 5</div>
+        <div class="quiz-question" id="quiz-question"></div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-nav">
+          <button class="btn-quiz-next" id="quiz-next" disabled>Siguiente →</button>
         </div>
       </div>
-      <div class="cap-card reveal d2">
-        <div class="cap-n">02</div>
-        <h3>IA Documental</h3>
-        <p>Extraemos, clasificamos y estructuramos datos de cualquier documento en segundos. Lo que tardaba días tarda minutos — con trazabilidad completa en cada paso.</p>
-        <div class="cap-tags">
-          <span class="cap-tag">PDF · Excel</span>
-          <span class="cap-tag">OCR + IA</span>
-          <span class="cap-tag">Cualquier Formato</span>
-        </div>
-      </div>
-      <div class="cap-card reveal d3">
-        <div class="cap-n">03</div>
-        <h3>Integración de Sistemas</h3>
-        <p>Conectamos los sistemas que ya usas, sin reemplazarlos. La información fluye sola entre plataformas. Una sola fuente de verdad para toda tu operación.</p>
-        <div class="cap-tags">
-          <span class="cap-tag">APIs REST</span>
-          <span class="cap-tag">Webhooks</span>
-          <span class="cap-tag">Azure · AWS</span>
+
+      <div class="quiz-result" id="quiz-result">
+        <div class="result-level-num" id="result-num">3</div>
+        <div class="result-level-name" id="result-name">Automatizado</div>
+        <div class="result-desc" id="result-desc"></div>
+        <div class="result-next" id="result-next"></div>
+        <a href="https://outlook.office.com/bookwithme/user/a673b02c880e4a6ebcf19429b1fc7750@rixentechnology.com/meetingtype/25RPN336zkSVJOXmVCTH9Q2?anonymous&ismsaljsauthenabled&ep=mcard"
+           target="_blank" rel="noopener" class="btn-primary" style="display:inline-block; margin-top:0.5rem;">
+          Quiero llegar al Nivel 5 → Agendar conversación
+        </a>
+        <div style="margin-top:1.5rem;">
+          <button onclick="resetQuiz()" style="background:none;border:none;color:var(--text-dim);font-size:0.78rem;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:underline;">
+            Volver a hacer el diagnóstico
+          </button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- METODOLOGÍA -->
-<section id="how">
-  <div class="wrap">
-    <p class="eyebrow reveal">Metodología</p>
-    <h2 class="h2 reveal d1">Tres fases.<br><span class="thin">Sin sorpresas.</span></h2>
-    <div class="how-grid">
-      <div class="phase reveal d1">
-        <div class="phase-dot"></div>
-        <div class="phase-n">01</div>
-        <h3>Diagnóstico</h3>
-        <p>Mapeamos tu arquitectura de procesos, flujos de datos y puntos de fricción. Sin suposiciones — solo datos verificados de tu operación real.</p>
+<!-- ── CONFIANZA ── -->
+<section id="confianza">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Por qué los equipos de IT confían en Rixen</span>
+    <h2 class="reveal reveal-delay-1">Gobernanza desde el primer día.</h2>
+    <p class="section-intro reveal reveal-delay-2">
+      Automatizar no significa perder el control. Significa tenerlo mejor que nunca.
+    </p>
+
+    <div class="reveal">
+      <div class="trust-block-title">Nuestro compromiso técnico</div>
+      <div class="trust-grid">
+        <div class="trust-item">Las credenciales permanecen bajo control del cliente en todo momento</div>
+        <div class="trust-item">Trabajamos primero en ambientes de prueba — nunca directo a producción</div>
+        <div class="trust-item">Cada automatización incluye registro de auditoría completo</div>
+        <div class="trust-item">Cada cambio queda documentado y versionado</div>
+        <div class="trust-item">Toda integración puede revertirse si el cliente lo decide</div>
+        <div class="trust-item">No instalamos software propietario que genere dependencia de Rixen</div>
       </div>
-      <div class="phase reveal d2">
-        <div class="phase-dot"></div>
-        <div class="phase-n">02</div>
-        <h3>Despliegue</h3>
-        <p>Ciclos de implementación controlados. El flujo de mayor impacto primero. Los entregables son visibles y medibles desde el primer sprint. Alcance fijo antes de comenzar.</p>
-      </div>
-      <div class="phase reveal d3">
-        <div class="phase-dot"></div>
-        <div class="phase-n">03</div>
-        <h3>Gobernanza</h3>
-        <p>Métricas de desempeño definidas y reportes estructurados. Cada pipeline monitoreado y refinado en el tiempo. Visibilidad total en manos del cliente.</p>
+    </div>
+
+    <div class="reveal reveal-delay-1">
+      <div class="trust-block-title">Lo que Rixen no automatiza</div>
+      <p class="no-sub">Una empresa seria sabe decir no.</p>
+      <ul class="trust-nolist">
+        <li>No automatizamos decisiones legales sin supervisión humana</li>
+        <li>No eliminamos aprobaciones críticas que requieren juicio humano</li>
+        <li>No conectamos sistemas sin autorización documentada de IT</li>
+        <li>No desplegamos IA en producción sin validación previa</li>
+        <li>No generamos dependencia: si Rixen sale, las operaciones continúan</li>
+      </ul>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="trust-block-title">Recursos para tu equipo</div>
+      <div class="docs-grid">
+        <div class="doc-card">
+          <div class="doc-icon">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="3" width="18" height="24" rx="2" stroke="#C49A3C" stroke-width="1.5"/>
+              <path d="M9 10h10M9 14h10M9 18h6" stroke="#C49A3C" stroke-width="1.5" stroke-linecap="round"/>
+              <rect x="19" y="17" width="8" height="12" rx="1.5" fill="rgba(196,154,60,0.12)" stroke="#C49A3C" stroke-width="1.2"/>
+              <path d="M21 21h4M21 24h2" stroke="#C49A3C" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="doc-role">Para el COO</div>
+          <div class="doc-title">Resumen ejecutivo: Operaciones Autónomas</div>
+          <div class="doc-desc">Qué son las Operaciones Autónomas y cómo impactan la eficiencia operacional.</div>
+          <button class="btn-doc" onclick="prefillContact('Solicito el resumen ejecutivo para COO')">
+            Solicitar documento
+          </button>
+        </div>
+        <div class="doc-card">
+          <div class="doc-icon">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="3" fill="rgba(196,154,60,0.2)" stroke="#C49A3C" stroke-width="1.5"/>
+              <circle cx="6" cy="8" r="2" stroke="#C49A3C" stroke-width="1.2"/>
+              <circle cx="26" cy="8" r="2" stroke="#C49A3C" stroke-width="1.2"/>
+              <circle cx="6" cy="24" r="2" stroke="#C49A3C" stroke-width="1.2"/>
+              <circle cx="26" cy="24" r="2" stroke="#C49A3C" stroke-width="1.2"/>
+              <path d="M8 8.8L13.2 13.2M18.8 18.8L23.2 23.2M8 23.2L13.2 18.8M18.8 13.2L23.2 8.8" stroke="#C49A3C" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+          </div>
+          <div class="doc-role">Para el CTO</div>
+          <div class="doc-title">Arquitectura de referencia</div>
+          <div class="doc-desc">Cómo Rixen se integra a tu infraestructura sin romper lo que ya funciona.</div>
+          <button class="btn-doc" onclick="prefillContact('Solicito la arquitectura de referencia para CTO')">
+            Solicitar documento
+          </button>
+        </div>
+        <div class="doc-card">
+          <div class="doc-icon">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 26h24" stroke="#C49A3C" stroke-width="1.5" stroke-linecap="round"/>
+              <rect x="5" y="17" width="4" height="9" rx="1" fill="rgba(196,154,60,0.15)" stroke="#C49A3C" stroke-width="1.2"/>
+              <rect x="12" y="12" width="4" height="14" rx="1" fill="rgba(196,154,60,0.2)" stroke="#C49A3C" stroke-width="1.2"/>
+              <rect x="19" y="7" width="4" height="19" rx="1" fill="rgba(196,154,60,0.3)" stroke="#C49A3C" stroke-width="1.2"/>
+              <path d="M7 14l5-5 7-3 5-3" stroke="#C49A3C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="doc-role">Para el CEO / CFO</div>
+          <div class="doc-title">Marco de ROI</div>
+          <div class="doc-desc">Cómo calcular el retorno de implementar Operaciones Autónomas en tu empresa.</div>
+          <button class="btn-doc" onclick="prefillContact('Solicito el marco de ROI para CEO/CFO')">
+            Solicitar documento
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONFIANZA -->
-<section id="security">
-  <div class="wrap">
-    <p class="eyebrow reveal">Control &amp; Confianza</p>
-    <h2 class="h2 reveal d1">Diseñado para<br><span class="thin">entornos que no perdonan errores.</span></h2>
-    <div class="sec-grid">
-      <div class="sec-card reveal d1">
-        <h4>Manejo confidencial de datos</h4>
-        <p>Los parámetros de retención de datos se definen contractualmente en cada engagement. Tu información se maneja bajo términos de confidencialidad estrictos, exclusivamente para el alcance acordado.</p>
+<!-- ── CONTACTO ── -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-meta">
+        <span class="eyebrow reveal">Primer paso</span>
+        <h2 class="reveal reveal-delay-1">Cuéntanos dónde está tu operación hoy.</h2>
+        <p class="reveal reveal-delay-2">
+          Analizamos tu empresa antes de la primera reunión.
+          Llegas sabiendo lo que podemos lograr juntos.
+        </p>
+        <div class="contact-stat reveal reveal-delay-3">
+          <div class="stat-num">&lt;24h</div>
+          <div class="stat-label">Tiempo de respuesta</div>
+        </div>
       </div>
-      <div class="sec-card reveal d2">
-        <h4>Revisión humana integrada</h4>
-        <p>Cada pipeline incluye una etapa de revisión estructurada antes de que los datos entren a tus sistemas. La automatización acelera el proceso — no elimina el juicio humano donde se requiere.</p>
-      </div>
-      <div class="sec-card reveal d3">
-        <h4>Documentación de procesos</h4>
-        <p>Cada transformación queda registrada y trazable. La documentación del proceso se entrega con cada engagement, estructurada para cumplir con tus requisitos internos de reporte y control.</p>
-      </div>
-      <div class="sec-card reveal d4">
-        <h4>Entorno de procesamiento controlado</h4>
-        <p>Los datos sensibles se procesan en un entorno controlado, con parámetros acordados y documentados antes de que cualquier pipeline entre en producción.</p>
+      <div class="reveal reveal-delay-1">
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre *</label>
+              <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre" />
+            </div>
+            <div class="form-group">
+              <label for="empresa">Empresa</label>
+              <input type="text" id="empresa" name="empresa" placeholder="Tu empresa" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required placeholder="tu@empresa.com" />
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="Opcional" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="mensaje">Mensaje *</label>
+            <textarea id="mensaje" name="mensaje" required
+              placeholder="Describe el proceso o área operacional que más tiempo consume a tu equipo..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Enviar — respuesta en menos de 24 h</button>
+        </form>
+        <div id="form-success">
+          Recibido. Analizaremos tu empresa y te contactamos en menos de 24 horas.
+        </div>
+        <div id="form-error">
+          Hubo un error. Escríbenos a <a href="mailto:connect@rixentechnology.com" style="color:#E55;">connect@rixentechnology.com</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FORM -->
-<section id="form-section">
-  <div class="form-wrap">
-    <p class="form-eyebrow reveal">Contacto</p>
-    <h2 class="form-h reveal d1">¿Listo para conversarlo?</h2>
-    <p class="form-sub reveal d2">Cuéntanos sobre tu empresa y el desafío que enfrentas. Te respondemos en menos de 24 horas.</p>
-    <form id="contactForm" class="reveal d3" novalidate>
-      <div class="form-grid">
-        <div class="form-field">
-          <label for="f-nombre">Nombre</label>
-          <input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="name" required>
-        </div>
-        <div class="form-field">
-          <label for="f-empresa">Empresa</label>
-          <input id="f-empresa" name="empresa" type="text" placeholder="Tu empresa" autocomplete="organization">
-        </div>
-        <div class="form-field">
-          <label for="f-email">Email <span style="color:var(--gold)">*</span></label>
-          <input id="f-email" name="email" type="email" placeholder="tu@empresa.com" autocomplete="email" required>
-        </div>
-        <div class="form-field">
-          <label for="f-telefono">Teléfono</label>
-          <input id="f-telefono" name="telefono" type="tel" placeholder="+507 6000-0000" autocomplete="tel">
-        </div>
-        <div class="form-field full">
-          <label for="f-mensaje">Mensaje <span style="color:var(--gold)">*</span></label>
-          <textarea id="f-mensaje" name="mensaje" placeholder="¿Cuál es el proceso o desafío que quieres automatizar?" required></textarea>
-        </div>
-      </div>
-      <button type="submit" class="form-submit">
-        Enviar mensaje
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="form-msg" id="formMsg"></div>
-    </form>
-  </div>
-</section>
-
-<!-- CTA -->
-<section id="contact">
+<!-- ── CTA FINAL ── -->
+<section id="cta-final">
   <div class="cta-glow"></div>
   <div class="cta-inner">
-    <p class="eyebrow reveal">Siguiente paso</p>
-    <h2 class="cta-h reveal d1"><span class="gold">Hablemos.</span></h2>
-    <p class="cta-sub reveal d2">30 minutos para entender dónde puede estar perdiendo tiempo tu equipo. Sin compromiso. Solo una conversación honesta.</p>
-    <a href="https://outlook.office.com/bookwithme/user/a673b02c880e4a6ebcf19429b1fc7750@rixentechnology.com/meetingtype/25RPN336zkSVJOXmVCTH9Q2?anonymous&ismsaljsauthenabled&ep=mcard" target="_blank" class="btn-p reveal d3" style="display:inline-flex">
-      Agendar 30 minutos
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left:10px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-    <div class="cta-email reveal d4">
-      <a href="mailto:connect@rixentechnology.com">connect@rixentechnology.com</a>
+    <span class="cta-eyebrow reveal">Siguiente paso</span>
+    <h2 class="reveal reveal-delay-1">Hablemos.</h2>
+    <p class="reveal reveal-delay-2">
+      30 minutos para entender dónde puede estar perdiendo tiempo tu equipo.
+      Sin compromiso. Solo una conversación honesta.
+    </p>
+    <div class="reveal reveal-delay-3">
+      <a href="https://outlook.office.com/bookwithme/user/a673b02c880e4a6ebcf19429b1fc7750@rixentechnology.com/meetingtype/25RPN336zkSVJOXmVCTH9Q2?anonymous&ismsaljsauthenabled&ep=mcard"
+         target="_blank" rel="noopener" class="btn-primary">
+        Agendar 30 minutos →
+      </a>
+      <a href="mailto:connect@rixentechnology.com" class="email-link">connect@rixentechnology.com</a>
     </div>
   </div>
 </section>
 
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-brand">
-    <svg width="20" height="13" viewBox="0 0 28 18" fill="none">
-      <rect y="0" width="28" height="3" rx="1.5" fill="#C49A3C" opacity=".3"/>
-      <rect y="7.5" width="20" height="3" rx="1.5" fill="#C49A3C" opacity=".18"/>
-      <rect y="15" width="13" height="3" rx="1.5" fill="#C49A3C" opacity=".1"/>
-    </svg>
-    <span>RI<span style="color:var(--gold2)">X</span>EN TECHNOLOGY</span>
+  <div class="footer-inner">
+    <div class="footer-logo">Rixen Technology</div>
+    <div class="footer-tagline">Definiendo las Operaciones Autónomas en Latinoamérica.</div>
+    <nav class="footer-links">
+      <a href="#framework">Framework</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#confianza">Confianza</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="footer-copy">© 2026 Rixen Technology · rixentechnology.com</div>
   </div>
-  <div class="footer-links">
-    <a href="#capabilities">Capacidades</a>
-    <a href="#how">Metodología</a>
-    <a href="#security">Confianza</a>
-    <a href="#contact">Contacto</a>
-  </div>
-  <div class="footer-copy">© 2026 Rixen Technology · rixentechnology.com</div>
 </footer>
 
 <script>
-// PROGRESS
-const prog=document.getElementById('progress');
-window.addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=((h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
-// NAV
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>40);},{passive:true});
-// PARTICLES (steel blue, subtle)
-(function(){
-  const c=document.getElementById('hcanvas'),ctx=c.getContext('2d');
-  let W,H,pts=[];
-  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-  for(let i=0;i<50;i++)pts.push({
-    x:Math.random()*1400,y:Math.random()*800,
-    vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,
-    r:Math.random()*1.2+.3,a:Math.random()*.4+.15
-  });
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(43,80,104,${p.a*.5})`;ctx.fill();
+/* ── SCROLL PROGRESS ── */
+const progressBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  progressBar.style.width = Math.min(pct, 100) + '%';
+}, { passive: true });
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+/* ── HAMBURGER ── */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 960) mobileMenu.classList.remove('open');
+});
+
+/* ── REVEAL ON SCROLL ── */
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+reveals.forEach(el => revealObserver.observe(el));
+
+/* ── HERO CANVAS PARTICLES ── */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  const NUM = 70;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function Particle() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.r = Math.random() * 1.8 + 0.4;
+    this.alpha = Math.random() * 0.35 + 0.05;
+  }
+
+  function init() {
+    particles = Array.from({ length: NUM }, () => new Particle());
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(70,120,180,${p.alpha})`;
+      ctx.fill();
     });
-    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
-      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-      if(d<150){
-        ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
-        ctx.strokeStyle=`rgba(43,80,104,${(1-d/150)*.06})`;ctx.lineWidth=.5;ctx.stroke();
+
+    // Connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(70,120,180,${0.06 * (1 - dist/100)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
       }
     }
     requestAnimationFrame(draw);
   }
-  draw();
-})();
-// TOOLS
-(function(){
-  const tools=['Microsoft 365','Azure','n8n','Make','Google Workspace','SharePoint','Power Automate','Zapier','Teams','OpenAI','Anthropic','SAP','Salesforce','HubSpot','DocuSign','Slack','Notion','Sage'];
-  const t=document.getElementById('toolsTrack');
-  [...tools,...tools].forEach(n=>{
-    const d=document.createElement('div');d.className='tool-item';
-    d.innerHTML='<span class="tool-dot"></span>'+n;t.appendChild(d);
-  });
-})();
-// CONTACT FORM
-(function(){
-  const PA_URL='https://default3c900057bb0e4494b30a5a86043f88.ff.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d9c8f426b0a840cba6311147f6f9e560/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=dk1t3cppzHa40akwVPcENDZx9bczEF8ml3u9g8qXJy8';
-  const form=document.getElementById('contactForm');
-  const btn=form.querySelector('.form-submit');
-  const msg=document.getElementById('formMsg');
-  form.addEventListener('submit',async function(e){
-    e.preventDefault();
-    const nombre=form.nombre.value.trim();
-    const empresa=form.empresa.value.trim();
-    const email=form.email.value.trim();
-    const telefono=form.telefono.value.trim();
-    const mensaje=form.mensaje.value.trim();
-    if(!nombre||!email||!mensaje){msg.className='form-msg err';msg.textContent='Por favor completa nombre, email y mensaje.';return;}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.className='form-msg err';msg.textContent='Por favor ingresa un email válido.';return;}
-    btn.disabled=true;btn.textContent='Enviando…';
-    msg.className='form-msg';msg.textContent='';
-    try{
-      await fetch(PA_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({nombre,empresa,email,telefono,mensaje})
-      });
-      msg.className='form-msg ok';
-      msg.textContent='¡Mensaje enviado! Te respondemos en menos de 24 horas.';
-      form.reset();
-    }catch(err){
-      msg.className='form-msg err';
-      msg.textContent='Hubo un error. Escríbenos a connect@rixentechnology.com.';
-    }
-    btn.disabled=false;btn.innerHTML='Enviar mensaje <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-  });
-})();
-// REVEAL
-(function(){
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-  },{threshold:.08,rootMargin:'0px 0px -30px 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-})();
-</script>
 
+  resize();
+  init();
+  draw();
+  window.addEventListener('resize', () => { resize(); init(); });
+})();
+
+/* ── TOOLS BAR ── */
+(function() {
+  const tools = [
+    'Microsoft 365', 'Azure', 'n8n', 'Make', 'Google Workspace',
+    'SharePoint', 'Power Automate', 'Zapier', 'Teams', 'OpenAI',
+    'Anthropic', 'SAP', 'Salesforce', 'HubSpot', 'DocuSign',
+    'Slack', 'Notion', 'Sage'
+  ];
+  const track = document.getElementById('tools-track');
+  const items = [...tools, ...tools].map(t => {
+    const el = document.createElement('div');
+    el.className = 'tool-item';
+    el.innerHTML = `<span class="tool-dot"></span>${t}`;
+    return el;
+  });
+  items.forEach(el => track.appendChild(el));
+})();
+
+/* ── QUIZ ── */
+const quizData = [
+  {
+    q: '¿Cómo se ejecutan la mayoría de tus procesos operativos?',
+    opts: [
+      'Manualmente, por personas, usando Excel o correo',
+      'En sistemas digitales, pero con mucha intervención manual',
+      'Mayormente automatizados, con algunas excepciones',
+      'Con agentes o sistemas que trabajan solos'
+    ]
+  },
+  {
+    q: 'Cuando un proceso falla, ¿cómo te enteras?',
+    opts: [
+      'Un empleado lo nota y me avisa',
+      'Revisando reportes periódicamente',
+      'Tenemos alertas automáticas básicas',
+      'El sistema detecta, registra y escala sin intervención'
+    ]
+  },
+  {
+    q: '¿Tus sistemas de negocio se hablan entre sí?',
+    opts: [
+      'No — cada sistema es una isla',
+      'Algunos sí, pero con mucho trabajo manual de por medio',
+      'Mayoría integrados, pero hay gaps importantes',
+      'Flujo de datos automatizado entre todas las plataformas'
+    ]
+  },
+  {
+    q: '¿Cuánto tiempo pierde tu equipo en tareas repetitivas?',
+    opts: [
+      'La mayoría del día',
+      'Varias horas al día',
+      'Algunas horas por semana',
+      'Casi ninguna — la automatización lo maneja'
+    ]
+  },
+  {
+    q: '¿Tienes visibilidad en tiempo real de tus operaciones?',
+    opts: [
+      'No — me entero cuando algo ya falló',
+      'Parcialmente — algunos reportes pero no en tiempo real',
+      'Bastante buena, aunque manual',
+      'Dashboard en tiempo real con alertas automáticas'
+    ]
+  }
+];
+
+const results = [
+  {
+    level: 1, name: 'Manual',
+    desc: 'Tu operación depende directamente de las personas para cada paso. Cualquier ausencia genera riesgo. El crecimiento requiere sumar más gente, no más inteligencia al proceso.',
+    next: '<strong>El siguiente paso:</strong> Digitalizar los procesos clave y eliminar el Excel operativo. Rixen identifica cuáles procesos tienen mayor retorno inmediato.'
+  },
+  {
+    level: 2, name: 'Digitalizado',
+    desc: 'Tienes los datos en sistemas, pero el trabajo humano sigue siendo el motor. Estás en el punto de inflexión donde automatizar genera retorno inmediato.',
+    next: '<strong>El siguiente paso:</strong> Conectar los sistemas que ya tienes y automatizar los flujos más repetitivos. Sin reemplazar infraestructura — sumando inteligencia encima.'
+  },
+  {
+    level: 3, name: 'Automatizado',
+    desc: 'Tu equipo ya opera con flujos automatizados. El próximo salto es añadir IA que tome decisiones, no solo ejecute instrucciones.',
+    next: '<strong>El siguiente paso:</strong> Implementar agentes de IA que analicen, clasifiquen y propongan — con supervisión humana donde la organización lo decida.'
+  },
+  {
+    level: 4, name: 'Asistido por IA',
+    desc: 'La IA ya trabaja junto a tu equipo. Estás a un paso del nivel donde las operaciones se ejecutan, monitorean y optimizan solas.',
+    next: '<strong>El siguiente paso:</strong> Cerrar los últimos gaps hacia Operaciones Autónomas completas — con auditoría total y control preservado en tu organización.'
+  }
+];
+
+let currentQ = 0;
+let answers = [];
+let selectedOption = null;
+
+function renderQuestion() {
+  const data = quizData[currentQ];
+  document.getElementById('quiz-step-label').textContent = `Pregunta ${currentQ + 1} de ${quizData.length}`;
+  document.getElementById('quiz-progress-fill').style.width = `${((currentQ + 1) / quizData.length) * 100}%`;
+  document.getElementById('quiz-question').textContent = data.q;
+
+  const optsEl = document.getElementById('quiz-options');
+  optsEl.innerHTML = '';
+  data.opts.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'quiz-option';
+    btn.innerHTML = `
+      <div class="quiz-option-letter">${String.fromCharCode(65 + i)}</div>
+      <div class="quiz-option-text">${opt}</div>
+    `;
+    btn.addEventListener('click', () => selectOption(i, btn));
+    optsEl.appendChild(btn);
+  });
+
+  selectedOption = null;
+  document.getElementById('quiz-next').disabled = true;
+}
+
+function selectOption(idx, el) {
+  document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedOption = idx;
+  document.getElementById('quiz-next').disabled = false;
+}
+
+document.getElementById('quiz-next').addEventListener('click', () => {
+  if (selectedOption === null) return;
+  answers.push(selectedOption);
+  currentQ++;
+  if (currentQ < quizData.length) {
+    renderQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  const counts = [0, 0, 0, 0];
+  answers.forEach(a => counts[a]++);
+  const dominantIdx = counts.indexOf(Math.max(...counts));
+  const result = results[dominantIdx];
+
+  document.getElementById('result-num').textContent = result.level;
+  document.getElementById('result-name').textContent = result.name;
+  document.getElementById('result-desc').textContent = result.desc;
+  document.getElementById('result-next').innerHTML = result.next;
+
+  document.getElementById('quiz-main').style.display = 'none';
+  const resultEl = document.getElementById('quiz-result');
+  resultEl.style.display = 'block';
+
+  // Animate number
+  const numEl = document.getElementById('result-num');
+  numEl.style.transform = 'scale(0.5)';
+  numEl.style.opacity = '0';
+  numEl.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+  requestAnimationFrame(() => {
+    numEl.style.transform = 'scale(1)';
+    numEl.style.opacity = '1';
+  });
+}
+
+function resetQuiz() {
+  currentQ = 0;
+  answers = [];
+  selectedOption = null;
+  document.getElementById('quiz-main').style.display = 'block';
+  document.getElementById('quiz-result').style.display = 'none';
+  renderQuestion();
+}
+
+renderQuestion();
+
+/* ── PREFILL CONTACT ── */
+function prefillContact(msg) {
+  document.getElementById('mensaje').value = msg;
+  document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => document.getElementById('mensaje').focus(), 600);
+}
+
+/* ── CONTACT FORM ── */
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.btn-submit');
+  const successEl = document.getElementById('form-success');
+  const errorEl = document.getElementById('form-error');
+
+  const nombre = document.getElementById('nombre').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const mensaje = document.getElementById('mensaje').value.trim();
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!nombre || !email || !mensaje || !emailRe.test(email)) {
+    errorEl.textContent = 'Por favor completa todos los campos requeridos con un email válido.';
+    errorEl.style.display = 'block';
+    successEl.style.display = 'none';
+    return;
+  }
+
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  successEl.style.display = 'none';
+  errorEl.style.display = 'none';
+
+  const PA_URL = 'https://default3c900057bb0e4494b30a5a86043f88.ff.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d9c8f426b0a840cba6311147f6f9e560/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=dk1t3cppzHa40akwVPcENDZx9bczEF8ml3u9g8qXJy8';
+
+  try {
+    const res = await fetch(PA_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: nombre,
+        empresa: document.getElementById('empresa').value.trim(),
+        email: email,
+        telefono: document.getElementById('telefono').value.trim(),
+        mensaje: mensaje
+      })
+    });
+
+    if (res.ok) {
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+    } else {
+      throw new Error('Server error');
+    }
+  } catch {
+    errorEl.innerHTML = 'Hubo un error. Escríbenos a <a href="mailto:connect@rixentechnology.com" style="color:#E55;">connect@rixentechnology.com</a>';
+    errorEl.style.display = 'block';
+    btn.textContent = 'Enviar — respuesta en menos de 24 h';
+    btn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
