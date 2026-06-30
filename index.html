@@ -1232,7 +1232,7 @@
           <div class="doc-role">Para el COO</div>
           <div class="doc-title">Resumen ejecutivo: Operaciones Autónomas</div>
           <div class="doc-desc">Qué son las Operaciones Autónomas y cómo impactan la eficiencia operacional.</div>
-          <button class="btn-doc" onclick="prefillContact('Solicito el resumen ejecutivo para COO')">
+          <button class="btn-doc" onclick="prefillContact('Solicito el resumen ejecutivo para COO', 'resumen-ejecutivo-coo')">
             Solicitar documento
           </button>
         </div>
@@ -1250,7 +1250,7 @@
           <div class="doc-role">Para el CTO</div>
           <div class="doc-title">Arquitectura de referencia</div>
           <div class="doc-desc">Cómo Rixen se integra a tu infraestructura sin romper lo que ya funciona.</div>
-          <button class="btn-doc" onclick="prefillContact('Solicito la arquitectura de referencia para CTO')">
+          <button class="btn-doc" onclick="prefillContact('Solicito la arquitectura de referencia para CTO', 'arquitectura-referencia-cto')">
             Solicitar documento
           </button>
         </div>
@@ -1267,7 +1267,7 @@
           <div class="doc-role">Para el CEO / CFO</div>
           <div class="doc-title">Marco de ROI</div>
           <div class="doc-desc">Cómo calcular el retorno de implementar Operaciones Autónomas en tu empresa.</div>
-          <button class="btn-doc" onclick="prefillContact('Solicito el marco de ROI para CEO/CFO')">
+          <button class="btn-doc" onclick="prefillContact('Solicito el marco de ROI para CEO/CFO', 'marco-roi-cefo')">
             Solicitar documento
           </button>
         </div>
@@ -1319,6 +1319,7 @@
             <textarea id="mensaje" name="mensaje" required
               placeholder="Describe el proceso o área operacional que más tiempo consume a tu equipo..."></textarea>
           </div>
+          <input type="hidden" id="documento" name="documento" value="" />
           <button type="submit" class="btn-submit">Enviar — respuesta en menos de 24 h</button>
         </form>
         <div id="form-success">
@@ -1637,8 +1638,9 @@ function resetQuiz() {
 renderQuestion();
 
 /* ── PREFILL CONTACT ── */
-function prefillContact(msg) {
+function prefillContact(msg, docCode) {
   document.getElementById('mensaje').value = msg;
+  document.getElementById('documento').value = docCode || '';
   document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
   setTimeout(() => document.getElementById('mensaje').focus(), 600);
 }
@@ -1679,7 +1681,8 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         empresa: document.getElementById('empresa').value.trim(),
         email: email,
         telefono: document.getElementById('telefono').value.trim(),
-        mensaje: mensaje
+        mensaje: mensaje,
+        documento: document.getElementById('documento').value.trim()
       })
     });
 
